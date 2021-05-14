@@ -9,7 +9,7 @@ using HorseRidingAPI.Models;
 
 namespace HorseRidingAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SeancesController : ControllerBase
     {
@@ -40,7 +40,37 @@ namespace HorseRidingAPI.Controllers
 
             return seance;
         }
+        // GET: api/Seances/date
+        [HttpGet("getwithdate/{date}")]
+        public async Task<ActionResult<Seance>> GetSeance(DateTime date)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b => b.StartDate == date)
+           .FirstOrDefault(); 
 
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return seance;
+        }
+        [HttpGet("{date}/{date1}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date,DateTime date1)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b => b.StartDate >= date&& b.StartDate<=date1)
+           .ToListAsync();
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return await seance;
+        }
         // PUT: api/Seances/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

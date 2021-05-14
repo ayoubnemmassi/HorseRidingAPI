@@ -10,7 +10,7 @@ using Task = HorseRidingAPI.Models.Task;
 
 namespace HorseRidingAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -41,6 +41,53 @@ namespace HorseRidingAPI.Controllers
 
             return task;
         }
+        // GET: api/Tasks/5
+        [HttpGet("user/{userid}")]
+        public async Task<ActionResult<IEnumerable<Task>>> GetUserTask(int userid)
+        {
+            var task = _context.Tasks
+          .FromSqlRaw("SELECT * FROM tasks")
+          .Where(b => b.UserFk == userid)
+          .ToListAsync();
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return await task;
+        }
+        [HttpGet("getwithdate/{date}")]
+        public async Task<ActionResult<Task>> GetTask(DateTime date)
+        {
+            var task = _context.Tasks
+           .FromSqlRaw("SELECT * FROM tasks")
+           .Where(b => b.StartDate == date)
+           .FirstOrDefault();
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return   task;
+        }
+        [HttpGet("{date}/{date1}")]
+        public async Task<ActionResult<IEnumerable<Task>>> GetTask(DateTime date, DateTime date1)
+        {
+            var task = _context.Tasks
+           .FromSqlRaw("SELECT * FROM tasks")
+           .Where(b => b.StartDate >= date && b.StartDate <= date1)
+           .ToListAsync();
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return await task;
+        }
+
 
         // PUT: api/Tasks/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

@@ -9,7 +9,7 @@ namespace HorseRidingAPI.Models
     {
         public int TaskId { get; set; }
         public DateTime StartDate { get; set; }
-        public byte DurationMinut { get; set; }
+        public int DurationMinut { get; set; }
         public string Title { get; set; }
         public string Detail { get; set; }
         public DateTime IsDone { get; set; }
