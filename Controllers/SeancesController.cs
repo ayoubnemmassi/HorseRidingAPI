@@ -40,14 +40,29 @@ namespace HorseRidingAPI.Controllers
 
             return seance;
         }
-        // GET: api/Seances/date
         [HttpGet("getwithdate/{date}")]
-        public async Task<ActionResult<Seance>> GetSeance(DateTime date)
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date)
         {
             var seance = _context.Seances
            .FromSqlRaw("SELECT * FROM seances")
-           .Where(b => b.StartDate == date)
-           .FirstOrDefault(); 
+           .Where(b => b.StartDate.Date == date )
+           .ToList();
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return seance;
+        }
+        // GET: api/Seances/date
+        [HttpGet("getwithdate/{date}/{id}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date,int id )
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b => b.StartDate.Date== date&& b.ClientId==id)
+           .ToList(); 
 
             if (seance == null)
             {
@@ -57,11 +72,11 @@ namespace HorseRidingAPI.Controllers
             return seance;
         }
         [HttpGet("{date}/{date1}")]
-        public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date,DateTime date1)
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date, DateTime date1)
         {
             var seance = _context.Seances
            .FromSqlRaw("SELECT * FROM seances")
-           .Where(b => b.StartDate >= date&& b.StartDate<=date1)
+           .Where(b => (b.StartDate >= date && b.StartDate <= date1) )
            .ToListAsync();
 
             if (seance == null)
@@ -71,6 +86,22 @@ namespace HorseRidingAPI.Controllers
 
             return await seance;
         }
+        [HttpGet("{date}/{date1}/{id}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date,DateTime date1,int id)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b =>( b.StartDate >= date&& b.StartDate<=date1)&&b.ClientId==id)
+           .ToListAsync();
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return await seance;
+        }
+
         // PUT: api/Seances/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
