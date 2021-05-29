@@ -9,6 +9,7 @@ namespace HorseRidingAPI.Models
     {
         public Client()
         {
+            NotesNavigation = new HashSet<Note>();
             Seances = new HashSet<Seance>();
         }
 
@@ -30,6 +31,7 @@ namespace HorseRidingAPI.Models
         public byte IsActive { get; set; }
         public string Notes { get; set; }
 
+        public virtual ICollection<Note> NotesNavigation { get; set; }
         public virtual ICollection<Seance> Seances { get; set; }
     }
 }
