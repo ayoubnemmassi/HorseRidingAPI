@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MSI\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj": {}
+    "C:\\Users\\PC-OTHMAN\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MSI\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj": {
+    "C:\\Users\\PC-OTHMAN\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MSI\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj",
+        "projectUniqueName": "C:\\Users\\PC-OTHMAN\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj",
         "projectName": "HorseRidingAPI",
-        "projectPath": "C:\\Users\\MSI\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj",
-        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MSI\\source\\repos\\HorseRidingAPI\\obj\\",
+        "projectPath": "C:\\Users\\PC-OTHMAN\\source\\repos\\HorseRidingAPI\\HorseRidingAPI.csproj",
+        "packagesPath": "C:\\Users\\PC-OTHMAN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC-OTHMAN\\source\\repos\\HorseRidingAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC-OTHMAN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -85,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
