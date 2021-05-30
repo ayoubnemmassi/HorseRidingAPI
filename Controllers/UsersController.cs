@@ -28,7 +28,7 @@ namespace HorseRidingAPI.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
+        [HttpGet("by/{id}")]
         public async Task<ActionResult<User>> GetUser(short id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -40,7 +40,21 @@ namespace HorseRidingAPI.Controllers
 
             return user;
         }
+        [HttpGet("{id}")]
+        //public async Task<ActionResult<IEnumerable<User>>> GetUser(string id)
+        //{
+        //    var users = _context.Users
+        //   .FromSqlRaw("SELECT * FROM users")
+        //   .Where(u => (u.UserType ==id))
+        //   .ToListAsync();
 
+        //    if (users == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return await users;
+        //}
         // PUT: api/Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

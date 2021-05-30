@@ -18,11 +18,12 @@ namespace HorseRidingAPI.Models
         }
 
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Seance> Seances { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-     
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -110,6 +111,27 @@ namespace HorseRidingAPI.Models
                     .HasColumnName("sessionToken");
             });
 
+            modelBuilder.Entity<Note>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ClientId).HasColumnName("clientID");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.Notes)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("notes");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.NotesNavigation)
+                    .HasForeignKey(d => d.ClientId)
+                    .HasConstraintName("FK_Notes_Clients");
+            });
+
             modelBuilder.Entity<Seance>(entity =>
             {
                 entity.Property(e => e.SeanceId).HasColumnName("seanceID");
@@ -118,7 +140,7 @@ namespace HorseRidingAPI.Models
 
                 entity.Property(e => e.Comments)
                     .IsRequired()
-                    .HasMaxLength(1)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("comments");
 
@@ -199,9 +221,7 @@ namespace HorseRidingAPI.Models
                 entity.HasIndex(e => e.UserEmail, "UQ__Users__D54ADF55015DA2B3")
                     .IsUnique();
 
-                entity.Property(e => e.UserId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("userID");
+                entity.Property(e => e.UserId).HasColumnName("userID");
 
                 entity.Property(e => e.AdminLevel).HasColumnName("adminLevel");
 

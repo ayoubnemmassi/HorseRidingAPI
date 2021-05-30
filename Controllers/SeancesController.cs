@@ -70,6 +70,21 @@ namespace HorseRidingAPI.Controllers
             }
 
             return seance;
+        }   // GET: monitor/date/id
+        [HttpGet("monitor/{date}/{id}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeanceMonitor(DateTime date,int id )
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b => b.StartDate.Date== date&& b.MonitorId==id)
+           .ToList(); 
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return seance;
         }
         [HttpGet("{date}/{date1}")]
         public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date, DateTime date1)
@@ -101,7 +116,21 @@ namespace HorseRidingAPI.Controllers
 
             return await seance;
         }
+        [HttpGet("monitor/{date}/{date1}/{id}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetMonitorSeance(DateTime date, DateTime date1, int id)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b => (b.StartDate >= date && b.StartDate <= date1) && b.MonitorId == id)
+           .ToListAsync();
 
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return await seance;
+        }
         // PUT: api/Seances/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

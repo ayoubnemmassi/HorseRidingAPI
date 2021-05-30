@@ -87,7 +87,21 @@ namespace HorseRidingAPI.Controllers
 
             return await task;
         }
+        [HttpGet("{date}/{date1}/{id}")]
+        public async Task<ActionResult<IEnumerable<Task>>> GetSeance(DateTime date, DateTime date1, int id)
+        {
+            var tasks = _context.Tasks
+           .FromSqlRaw("SELECT * FROM tasks")
+           .Where(b => (b.StartDate >= date && b.StartDate <= date1) && b.UserFk == id)
+           .ToListAsync();
 
+            if (tasks == null)
+            {
+                return NotFound();
+            }
+
+            return await tasks;
+        }
 
         // PUT: api/Tasks/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
