@@ -43,7 +43,7 @@ namespace HorseRidingAPI.Controllers
         [HttpGet("getwithdate/{date}")]
         public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date)
         {
-            var seance = _context.Seances
+            var seance =  _context.Seances
            .FromSqlRaw("SELECT * FROM seances")
            .Where(b => b.StartDate.Date == date )
            .ToList();
@@ -53,7 +53,7 @@ namespace HorseRidingAPI.Controllers
                 return NotFound();
             }
 
-            return seance;
+            return  seance;
         }
         // GET: api/Seances/date
         [HttpGet("getwithdate/{date}/{id}")]
