@@ -55,6 +55,36 @@ namespace HorseRidingAPI.Controllers
 
             return  seance;
         }
+        [HttpGet("getwithfulldate/{date}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeances(DateTime date)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances ")
+           .Where(b => b.StartDate == date)
+           .ToList();
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return seance;
+        }
+        [HttpGet("getwithfulldatemonitor/{date}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeancesandMonitor(DateTime date)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances s join users u on s.MonitorId=u.UserId")
+           .Where(b => b.StartDate == date)
+           .ToList();
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return seance;
+        }
         // GET: api/Seances/date
         [HttpGet("getwithdate/{date}/{id}")]
         public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date,int id )
