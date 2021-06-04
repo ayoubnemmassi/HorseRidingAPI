@@ -70,6 +70,159 @@ namespace HorseRidingAPI.Controllers
 
             return seance;
         }
+        [HttpGet("names/{id}")]
+        public  ActionResult<MonitorXClient> Getnames(int id)
+        {
+            var req = (from S in _context.Seances where S.SeanceId==id
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).FirstOrDefault();
+
+            return req;
+        } 
+        
+        [HttpGet("allnames/{date}")]
+        public  ActionResult<IEnumerable<MonitorXClient>> Getnames(DateTime date)
+        {
+            var req = (from S in _context.Seances where S.StartDate==date
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).ToList();
+
+            return req;
+        }
+        [HttpGet("allnamesClient/{date}/{id}")]
+        public  ActionResult<IEnumerable<MonitorXClient>> Getnames(DateTime date,int id)
+        {
+            var req = (from S in _context.Seances where S.StartDate==date && S.ClientId==id
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).ToList();
+
+            return req;
+        }    [HttpGet("allnamesMonitor/{date}/{id}")]
+        public  ActionResult<IEnumerable<MonitorXClient>> GetnamesMonitor(DateTime date,int id)
+        {
+            var req = (from S in _context.Seances where S.StartDate==date && S.MonitorId==id
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).ToList();
+
+            return req;
+        }
+        [HttpGet("allnamesshortdate/{date}")]
+        public  ActionResult<IEnumerable<MonitorXClient>> Getnamesshortdate(DateTime date)
+        {
+            var req = (from S in _context.Seances where S.StartDate.Date==date
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).ToList();
+
+            return req;
+        }  
+        [HttpGet("allnamesshortdate/{date}/{id}")]
+        public  ActionResult<IEnumerable<MonitorXClient>> Getnamesshortdate(DateTime date,int id)
+        {
+            var req = (from S in _context.Seances where S.StartDate.Date==date && S.ClientId==id
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).ToList();
+
+            return req;
+        }        [HttpGet("allnamesshortdateMonitor/{date}/{id}")]
+        public  ActionResult<IEnumerable<MonitorXClient>> GetnamesshortdateMonitor(DateTime date,int id)
+        {
+            var req = (from S in _context.Seances where S.StartDate.Date==date && S.MonitorId==id
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).ToList();
+
+            return req;
+        }
         [HttpGet("getwithfulldatemonitor/{date}")]
         public async Task<ActionResult<IEnumerable<Seance>>> GetSeancesandMonitor(DateTime date)
         {
