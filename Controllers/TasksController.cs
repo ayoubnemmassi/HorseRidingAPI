@@ -86,12 +86,13 @@ namespace HorseRidingAPI.Controllers
 
             return   task;
         }      [HttpGet("daytask/{date}/{id}")]
-        public async Task<ActionResult<Task>> GetTaskWithID(DateTime date,int id)
+        public async Task<ActionResult<IEnumerable<Task>>> GetTaskWithID(DateTime date,int id)
         {
             var task = _context.Tasks
+
            .FromSqlRaw("SELECT * FROM tasks")
-           .Where(b => b.StartDate.Date == date)
-           .FirstOrDefault();
+           .Where(b => b.StartDate.Date == date && b.UserFk==id)
+           .ToList();
 
             if (task == null)
             {
@@ -106,6 +107,21 @@ namespace HorseRidingAPI.Controllers
             var task = _context.Tasks
            .FromSqlRaw("SELECT * FROM tasks")
            .Where(b => b.StartDate >= date && b.StartDate <= date1)
+           .ToListAsync();
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return await task;
+        }
+        [HttpGet("all/{date}/{date1}")]
+        public async Task<ActionResult<IEnumerable<Task>>> GetTasks(DateTime date, DateTime date1)
+        {
+            var task = _context.Tasks
+           .FromSqlRaw("SELECT * FROM tasks")
+           .Where(b => b.StartDate.Date >= date && b.StartDate.Date <= date1)
            .ToListAsync();
 
             if (task == null)

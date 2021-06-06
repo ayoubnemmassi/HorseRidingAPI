@@ -41,8 +41,29 @@ namespace HorseRidingAPI.Controllers
             }
 
             return client;
-        }
+        }     [HttpGet("my/{id}")]
+        public ActionResult<IEnumerable<MonitorXClient>> Getnames(int id)
+        {
+            var req = (from S in _context.Seances
+                       where S.MonitorId == id
+                       select  new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                           Client=S.Client
 
+
+                       } ).ToList();
+
+            return req;
+        }
         // PUT: api/Clients/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

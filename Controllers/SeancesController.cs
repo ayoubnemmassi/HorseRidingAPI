@@ -114,6 +114,28 @@ namespace HorseRidingAPI.Controllers
                        }).ToList();
 
             return req;
+        }        
+        [HttpGet("myseances/{id}")]
+        public  ActionResult<IEnumerable<MonitorXClient>> Getmyseances(int id)
+        {
+            var req = (from S in _context.Seances where S.MonitorId==id
+                       select new MonitorXClient
+                       {
+                           SeanceId = S.SeanceId,
+                           ClientId = (from c in _context.Clients where c.ClientId == S.ClientId select c.FName).FirstOrDefault() + " " + (from c in _context.Clients where c.ClientId == S.ClientId select c.LName).FirstOrDefault(),
+                           MonitorId = (from c in _context.Users where c.UserId == S.MonitorId select c.UserFname).FirstOrDefault() + " " + (from c in _context.Users where c.UserId == S.MonitorId select c.UserLname).FirstOrDefault(),
+                           Comments = S.Comments,
+                           DurationMinut = S.DurationMinut,
+                           IsDone = S.DurationMinut,
+                           SeanceGrpId = S.SeanceGrpId,
+                           StartDate = S.StartDate,
+                           PaymentId = S.PaymentId,
+                          
+
+
+                       }).ToList();
+
+            return req;
         }
         [HttpGet("allnamesClient/{date}/{id}")]
         public  ActionResult<IEnumerable<MonitorXClient>> Getnames(DateTime date,int id)
@@ -283,6 +305,20 @@ namespace HorseRidingAPI.Controllers
             }
 
             return await seance;
+        }    [HttpGet("s/{date}/{date1}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeances(DateTime date, DateTime date1)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b => (b.StartDate.Date >= date && b.StartDate.Date <= date1) )
+           .ToListAsync();
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return await seance;
         }
         [HttpGet("{date}/{date1}/{id}")]
         public async Task<ActionResult<IEnumerable<Seance>>> GetSeance(DateTime date,DateTime date1,int id)
@@ -298,13 +334,27 @@ namespace HorseRidingAPI.Controllers
             }
 
             return await seance;
+        }     [HttpGet("all/{date}/{date1}/{id}")]
+        public async Task<ActionResult<IEnumerable<Seance>>> GetSeances(DateTime date,DateTime date1,int id)
+        {
+            var seance = _context.Seances
+           .FromSqlRaw("SELECT * FROM seances")
+           .Where(b =>( b.StartDate.Date >= date&& b.StartDate.Date<=date1)&&b.ClientId==id)
+           .ToListAsync();
+
+            if (seance == null)
+            {
+                return NotFound();
+            }
+
+            return await seance;
         }
         [HttpGet("monitor/{date}/{date1}/{id}")]
         public async Task<ActionResult<IEnumerable<Seance>>> GetMonitorSeance(DateTime date, DateTime date1, int id)
         {
             var seance = _context.Seances
            .FromSqlRaw("SELECT * FROM seances")
-           .Where(b => (b.StartDate >= date && b.StartDate <= date1) && b.MonitorId == id)
+           .Where(b => (b.StartDate.Date >= date && b.StartDate.Date <= date1) && b.MonitorId == id)
            .ToListAsync();
 
             if (seance == null)

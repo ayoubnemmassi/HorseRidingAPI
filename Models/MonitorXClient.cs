@@ -17,6 +17,6 @@ namespace HorseRidingAPI.Models
         public int? PaymentId { get; set; }
         public string Comments { get; set; }
 
-       
+        public virtual Client Client { get; set; }
     }
 }
